@@ -116,6 +116,15 @@ func Test_generateSuffix(t *testing.T) {
 			wantSuf: 0,
 			wantErr: true,
 		},
+		{
+			name: "bad case#2",
+			args: args{
+				pre: 0,
+				mid: 0,
+			},
+			wantSuf: 0,
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
