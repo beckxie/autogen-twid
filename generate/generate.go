@@ -8,12 +8,6 @@ import (
 	"time"
 )
 
-type ID struct {
-	// PrefixNumber int
-	// MiddleNumber int
-	// SuffixNumber int
-}
-
 // checksum rule: http://www2.lssh.tp.edu.tw/~hlf/class-1/lang-c/id/index.htm
 var checksumMagic []int = []int{1, 9, 8, 7, 6, 5, 4, 3, 2, 1}
 
@@ -101,20 +95,21 @@ func generateSuffix(pre int, mid int) (suf int, err error) {
 
 	if len(checksumMagic) != len(allNumber) {
 		return suf, fmt.Errorf("generateSuffix is fail, because length is not match: checksumMagic:%d,allNumber:%d", checksumMagic, allNumber)
-	} else {
-		var total int
-		// calculate checksum
-		for i := 0; i < len(checksumMagic); i++ {
-			total = total + checksumMagic[i]*allNumber[i]
-			log.Printf("checksumMagic[%d]*allNumber[%d]=%d+%d=%d\n", i, i, checksumMagic[i], allNumber[i], checksumMagic[i]*allNumber[i])
-		}
-		log.Printf("total:%d\n", total)
-		v := total % 10
-		if v != 0 {
-			suf = 10 - v
-		} else {
-			suf = v
-		}
 	}
+
+	var total int
+	// calculate checksum
+	for i := 0; i < len(checksumMagic); i++ {
+		total = total + checksumMagic[i]*allNumber[i]
+		log.Printf("checksumMagic[%d]*allNumber[%d]=%d+%d=%d\n", i, i, checksumMagic[i], allNumber[i], checksumMagic[i]*allNumber[i])
+	}
+	log.Printf("total:%d\n", total)
+	v := total % 10
+	if v != 0 {
+		suf = 10 - v
+	} else {
+		suf = v
+	}
+
 	return suf, nil
 }
